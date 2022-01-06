@@ -2,7 +2,19 @@
 https://docs.nestjs.com/controllers#controllers
 */
 
-import { Controller } from '@nestjs/common';
+import { Body, Controller, Post, Response } from '@nestjs/common';
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { AuthService } from './auth.service';
 
-@Controller()
-export class AuthController {}
+@Controller('auth')
+export class AuthController {
+  constructor(private authService: AuthService) {}
+
+  @Post('/registration')
+  registration(
+    @Body() userDto: CreateUserDto,
+    @Response({ passthrough: true }) response,
+  ) {
+    return this.authService.registration(userDto, response);
+  }
+}
