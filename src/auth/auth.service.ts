@@ -8,13 +8,9 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcryptjs';
-import { User } from 'src/users/users.model';
-import { InjectModel } from '@nestjs/sequelize';
-import { Token } from './token.model';
 import * as uuid from 'uuid';
 import { TokenService } from './token.service';
 import { MailService } from './mail.service';
@@ -114,11 +110,39 @@ export class AuthService {
 
   async logout(request, response) {
     const { refreshToken } = request.cookies;
-    console.log(refreshToken);
 
     const token = await this.tokenService.removeToken(refreshToken);
     response.clearCookie('refreshToken');
 
     return new HttpException('Успешно вышли из системы', HttpStatus.OK);
+  }
+
+  async refresh(request, response) {
+    const { refreshToken } = request.cookies;
+    const userData = await this.tokenService.validateRefreshToken(refreshToken);
+    const tokenFromDb = await this.tokenService.findToken(refreshToken);
+    if (!refreshToken || !userData || !tokenFromDb) {
+      return new UnauthorizedException({
+        message: 'Неавторизованный пользователь',
+      });
+    }
+
+    const user = await this.userService.getUserById(userData.id);
+
+    const userClient = new TokenUserDto(user);
+    const tokens = await this.tokenService.generateToken({ ...userClient });
+    await this.tokenService.saveToken({
+      userId: user.id,
+      refreshToken: tokens.refreshToken,
+    });
+
+    response.cookie('refreshToken', tokens.refreshToken, {
+      expires: new Date(new Date().getTime() + 30 * 1000),
+      sameSite: 'strict',
+      httpOnly: true,
+    });
+    return tokens.accessToken;
+
+    return;
   }
 }

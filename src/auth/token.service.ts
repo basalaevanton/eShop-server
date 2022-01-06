@@ -58,4 +58,33 @@ export class TokenService {
     });
     return tokenData;
   }
+
+  async validateRefreshToken(token) {
+    try {
+      const userData = this.jwtService.verify(token, {
+        secret: process.env.PRIVATE_REFRESH_KEY,
+      });
+      return userData;
+    } catch (error) {
+      return null;
+    }
+  }
+  async validateAccessToken(token) {
+    try {
+      const userData = this.jwtService.verify(token, {
+        secret: process.env.PRIVATE_KEY,
+      });
+      return userData;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  async findToken(refreshToken) {
+    const user = await this.tokenRepository.findOne({
+      where: { refreshToken },
+    });
+
+    return user;
+  }
 }
