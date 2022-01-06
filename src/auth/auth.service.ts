@@ -17,12 +17,14 @@ import { InjectModel } from '@nestjs/sequelize';
 import { Token } from './token.model';
 import * as uuid from 'uuid';
 import { TokenService } from './token.service';
+import { MailService } from './mail.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private userService: UsersService,
     private tokenService: TokenService,
+    private mailService: MailService,
     @InjectModel(Token) private tokenRepository: typeof Token,
   ) {}
 
@@ -39,15 +41,18 @@ export class AuthService {
       ...userDto,
       password: hashPassword,
     });
-    const activationLink = uuid.v4;
+    const activationLink = uuid.v4();
 
-    // await mailservice
+    await this.mailService.sendActivationMail(
+      userDto.email,
+      `${process.env.API_URL}/api/activate/${activationLink}`,
+    );
     const tokens = await this.tokenService.generateToken(user);
 
     await this.tokenService.saveToken({
       userId: user.id,
       refreshToken: tokens.refreshToken,
-      activationLink: activationLink(),
+      activationLink: activationLink,
     });
 
     response.cookie('refreshToken', tokens.refreshToken, {
