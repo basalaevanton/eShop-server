@@ -91,7 +91,7 @@ export class AuthService {
       httpOnly: true,
     });
 
-    return { user, userClient };
+    return { user: userClient, accessToken: tokens.accessToken };
   }
 
   private async validateUser(userDto: CreateUserDto) {
@@ -119,9 +119,15 @@ export class AuthService {
 
   async refresh(request, response) {
     const { refreshToken } = request.cookies;
+    if (!refreshToken) {
+      return new UnauthorizedException({
+        message: 'Неавторизованный пользователь',
+      });
+    }
+
     const userData = await this.tokenService.validateRefreshToken(refreshToken);
     const tokenFromDb = await this.tokenService.findToken(refreshToken);
-    if (!refreshToken || !userData || !tokenFromDb) {
+    if (!userData || !tokenFromDb) {
       return new UnauthorizedException({
         message: 'Неавторизованный пользователь',
       });
@@ -142,7 +148,5 @@ export class AuthService {
       httpOnly: true,
     });
     return tokens.accessToken;
-
-    return;
   }
 }

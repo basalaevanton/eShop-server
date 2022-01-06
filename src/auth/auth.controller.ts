@@ -47,7 +47,7 @@ export class AuthController {
     return this.authService.logout(request, response);
   }
 
-  @Post('/refresh')
+  @Get('/refresh')
   refresh(@Req() request: Request, @Response({ passthrough: true }) response) {
     return this.authService.refresh(request, response);
   }
