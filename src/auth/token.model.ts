@@ -11,7 +11,6 @@ import { User } from 'src/users/users.model';
 interface TokenCreationAttrs {
   userId: number;
   refreshToken: string;
-  activationLink: string;
 }
 
 @Table({ tableName: 'token' })
@@ -33,7 +32,4 @@ export class Token extends Model<Token, TokenCreationAttrs> {
     allowNull: false,
   })
   refreshToken: string;
-
-  @Column({ type: DataType.STRING })
-  activationLink: string;
 }

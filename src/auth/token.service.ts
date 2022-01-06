@@ -27,8 +27,7 @@ export class TokenService {
     @InjectModel(Token) private tokenRepository: typeof Token,
   ) {}
 
-  async generateToken(user: User) {
-    const payload = { email: user.email, id: user.id };
+  async generateToken(payload) {
     const accessToken = this.jwtService.sign(payload);
     const refreshToken = this.jwtService.sign(payload, {
       secret: process.env.PRIVATE_REFRESH_KEY,
@@ -47,9 +46,16 @@ export class TokenService {
     });
     if (tokenData) {
       tokenData.refreshToken = tokenDto.refreshToken;
-      tokenData.save();
+      return tokenData.save();
     }
     const token = await this.tokenRepository.create(tokenDto);
     return token;
+  }
+
+  async removeToken(refreshToken) {
+    const tokenData = await this.tokenRepository.destroy({
+      where: { refreshToken },
+    });
+    return tokenData;
   }
 }

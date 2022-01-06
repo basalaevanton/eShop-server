@@ -2,7 +2,7 @@
 https://docs.nestjs.com/providers#services
 */
 
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateUserDto } from './dto/create-user.dto';
 import { User } from './users.model';
@@ -21,6 +21,7 @@ export class UsersService {
       where: { email },
       include: { all: true },
     });
+
     return user;
   }
 
@@ -29,6 +30,14 @@ export class UsersService {
       where: { id },
       include: { all: true },
     });
+
+    return user;
+  }
+  async getUserByActiveLink(activationLink: string) {
+    const user = await this.userRepository.findOne({
+      where: { activationLink },
+    });
+
     return user;
   }
 }

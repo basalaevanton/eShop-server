@@ -8,6 +8,8 @@ import {
   Get,
   Param,
   Post,
+  Req,
+  Request,
   Res,
   Response,
 } from '@nestjs/common';
@@ -27,8 +29,21 @@ export class AuthController {
   }
 
   @Get('/activate/:link')
-  activateAcc(@Param(':link') link: string, @Res() res) {
+  activateAcc(@Param('link') link: string, @Res() res) {
     this.authService.activate(link);
     return res.redirect(process.env.CLIENT_URL);
+  }
+
+  @Post('/login')
+  login(
+    @Body() userDto: CreateUserDto,
+    @Response({ passthrough: true }) response,
+  ) {
+    return this.authService.login(userDto, response);
+  }
+
+  @Post('/logout')
+  logout(@Req() request: Request, @Response({ passthrough: true }) response) {
+    return this.authService.logout(request, response);
   }
 }

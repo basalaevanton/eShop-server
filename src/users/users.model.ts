@@ -25,6 +25,9 @@ export class User extends Model<User, UserCreationAttrs> {
   @Column({ type: DataType.STRING, defaultValue: false, allowNull: false })
   isActivated: boolean;
 
+  @Column({ type: DataType.STRING })
+  activationLink: string;
+
   @HasOne(() => Token)
   token: Token;
 }
