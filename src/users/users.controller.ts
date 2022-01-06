@@ -1,7 +1,7 @@
 /*
 https://docs.nestjs.com/controllers#controllers
 */
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 
@@ -17,5 +17,10 @@ export class UsersController {
   @Get()
   getUser(@Body() userDto: CreateUserDto) {
     return this.usersService.getUserByEmail(userDto.email);
+  }
+
+  @Get('/:id')
+  getUserId(@Param('id') id: number) {
+    return this.usersService.getUserById(id);
   }
 }

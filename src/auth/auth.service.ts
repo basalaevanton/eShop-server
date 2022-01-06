@@ -45,7 +45,7 @@ export class AuthService {
 
     await this.mailService.sendActivationMail(
       userDto.email,
-      `${process.env.API_URL}/api/activate/${activationLink}`,
+      `${process.env.API_URL}/auth/activate/${activationLink}`,
     );
     const tokens = await this.tokenService.generateToken(user);
 
@@ -61,5 +61,18 @@ export class AuthService {
       httpOnly: true,
     });
     return tokens.accessToken;
+  }
+
+  async activate(activationLink) {
+    const userId = await this.tokenRepository.findOne(activationLink);
+    if (!userId) {
+      throw new HttpException(
+        'Некоректная ссылка активации',
+        HttpStatus.BAD_REQUEST,
+      );
+    }
+    const user = await this.userService.getUserById(userId.id);
+    user.isActivated = true;
+    await user.save();
   }
 }
