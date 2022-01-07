@@ -9,20 +9,15 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
-import { UsersService } from 'src/users/users.service';
-import * as bcrypt from 'bcryptjs';
-import { User } from 'src/users/users.model';
+
 import { InjectModel } from '@nestjs/sequelize';
 import { Token } from './token.model';
-import * as uuid from 'uuid';
-import { AuthService } from './auth.service';
+
 import { CreateTokenDto } from './dto/create-token.dto';
 
 @Injectable()
 export class TokenService {
   constructor(
-    private userService: UsersService,
     private jwtService: JwtService,
     @InjectModel(Token) private tokenRepository: typeof Token,
   ) {}

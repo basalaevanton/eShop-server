@@ -9,10 +9,11 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import { AuthModule } from 'src/auth/auth.module';
 import { Token } from 'src/auth/token.model';
 import { User } from './users.model';
+import { UserInfo } from './userInfo.model';
 
 @Module({
   imports: [
-    SequelizeModule.forFeature([User, Token]),
+    SequelizeModule.forFeature([User, Token, UserInfo]),
     forwardRef(() => AuthModule),
   ],
   controllers: [UsersController],

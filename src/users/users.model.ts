@@ -1,9 +1,11 @@
 import { Column, DataType, HasOne, Model, Table } from 'sequelize-typescript';
 import { Token } from 'src/auth/token.model';
+import { UserInfo } from './userInfo.model';
 
 interface UserCreationAttrs {
   email: string;
   password: string;
+  activationLink: string;
 }
 
 @Table({ tableName: 'users' })
@@ -30,4 +32,7 @@ export class User extends Model<User, UserCreationAttrs> {
 
   @HasOne(() => Token)
   token: Token;
+
+  @HasOne(() => UserInfo)
+  userInfo: UserInfo;
 }

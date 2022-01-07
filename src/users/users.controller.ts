@@ -4,6 +4,7 @@ https://docs.nestjs.com/controllers#controllers
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { CreateUserDto } from './dto/create-user.dto';
+import { LoginUserDto } from './dto/login-user.dto';
 import { UsersService } from './users.service';
 
 @Controller('users')
@@ -18,7 +19,7 @@ export class UsersController {
   }
 
   @Get()
-  getUser(@Body() userDto: CreateUserDto) {
+  getUser(@Body() userDto: LoginUserDto) {
     return this.usersService.getUserByEmail(userDto.email);
   }
 

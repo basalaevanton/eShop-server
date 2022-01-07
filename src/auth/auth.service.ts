@@ -8,13 +8,14 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { LoginUserDto } from 'src/users/dto/login-user.dto';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcryptjs';
 import * as uuid from 'uuid';
 import { TokenService } from './token.service';
 import { MailService } from './mail.service';
 import { TokenUserDto } from './dto/token-user.copy';
+import { CreateUserDto } from 'src/users/dto/create-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -75,7 +76,7 @@ export class AuthService {
     await user.save();
   }
 
-  async login(userDto: CreateUserDto, response) {
+  async login(userDto: LoginUserDto, response) {
     const user = await this.validateUser(userDto);
     const userClient = new TokenUserDto(user);
     const tokens = await this.tokenService.generateToken({ ...userClient });
@@ -94,7 +95,7 @@ export class AuthService {
     return { user: userClient, accessToken: tokens.accessToken };
   }
 
-  private async validateUser(userDto: CreateUserDto) {
+  private async validateUser(userDto: LoginUserDto) {
     const user = await this.userService.getUserByEmail(userDto.email);
     const passwordEquals = await bcrypt.compare(
       userDto.password,
