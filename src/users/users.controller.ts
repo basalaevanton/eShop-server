@@ -23,8 +23,9 @@ export class UsersController {
     return this.usersService.getUserByEmail(userDto.email);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('/:id')
   getUserId(@Param('id') id: number) {
-    return this.usersService.getUserById(id);
+    return this.usersService.getUserInfoById(id);
   }
 }

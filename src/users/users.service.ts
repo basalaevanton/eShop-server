@@ -50,6 +50,14 @@ export class UsersService {
 
     return user;
   }
+  async getUserInfoById(id: number) {
+    const user = await this.userInfoRepository.findOne({
+      where: { id },
+      include: { all: true },
+    });
+
+    return user;
+  }
   async getUserByActiveLink(activationLink: string) {
     const user = await this.userRepository.findOne({
       where: { activationLink },

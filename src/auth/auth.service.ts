@@ -149,6 +149,6 @@ export class AuthService {
       sameSite: 'strict',
       httpOnly: true,
     });
-    return tokens.accessToken;
+    return { token: tokens.accessToken, user: userClient };
   }
 }
