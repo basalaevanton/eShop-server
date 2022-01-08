@@ -112,16 +112,17 @@ export class AuthService {
   async logout(request, response) {
     const { refreshToken } = request.cookies;
 
-    const token = await this.tokenService.removeToken(refreshToken);
     response.clearCookie('refreshToken');
+    const token = await this.tokenService.removeToken(refreshToken);
 
     return new HttpException('Успешно вышли из системы', HttpStatus.OK);
   }
 
   async refresh(request, response) {
     const { refreshToken } = request.cookies;
+
     if (!refreshToken) {
-      return new UnauthorizedException({
+      throw new UnauthorizedException({
         message: 'Неавторизованный пользователь',
       });
     }
@@ -129,7 +130,7 @@ export class AuthService {
     const userData = await this.tokenService.validateRefreshToken(refreshToken);
     const tokenFromDb = await this.tokenService.findToken(refreshToken);
     if (!userData || !tokenFromDb) {
-      return new UnauthorizedException({
+      throw new UnauthorizedException({
         message: 'Неавторизованный пользователь',
       });
     }
