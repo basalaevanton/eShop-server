@@ -3,7 +3,7 @@ https://docs.nestjs.com/controllers#controllers
 */
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserDto, EditUserDto } from './dto/user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { UsersService } from './users.service';
 
@@ -27,5 +27,11 @@ export class UsersController {
   @Get('/:id')
   getUserId(@Param('id') id: number) {
     return this.usersService.getUserInfoById(id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('/editUserInfo')
+  editUserInfo(@Body() userDto: EditUserDto) {
+    return this.usersService.editUserInfo(userDto);
   }
 }

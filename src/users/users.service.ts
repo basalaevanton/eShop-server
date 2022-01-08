@@ -4,7 +4,7 @@ https://docs.nestjs.com/providers#services
 
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { CreateUserDto } from './dto/create-user.dto';
+import { CreateUserDto, EditUserDto } from './dto/user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { UserInfo } from './userInfo.model';
 
@@ -62,6 +62,19 @@ export class UsersService {
     const user = await this.userRepository.findOne({
       where: { activationLink },
     });
+
+    return user;
+  }
+
+  async editUserInfo(userDto: EditUserDto) {
+    const user = await this.userInfoRepository.findOne({
+      where: { id: userDto.userId },
+    });
+    console.log(userDto);
+
+    await user.update(userDto);
+
+    await user.save;
 
     return user;
   }

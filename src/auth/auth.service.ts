@@ -15,7 +15,7 @@ import * as uuid from 'uuid';
 import { TokenService } from './token.service';
 import { MailService } from './mail.service';
 import { TokenUserDto } from './dto/token-user.copy';
-import { CreateUserDto } from 'src/users/dto/create-user.dto';
+import { CreateUserDto } from 'src/users/dto/user.dto';
 
 @Injectable()
 export class AuthService {

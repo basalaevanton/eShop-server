@@ -43,6 +43,6 @@ export class UserInfo extends Model<UserInfo, UserInfoCreationAttrs> {
   @Column({ type: DataType.ENUM(...Gender), allowNull: true })
   gender: string;
 
-  @Column({ type: DataType.DATEONLY, allowNull: true })
-  dateBirthday: Date;
+  @Column({ type: DataType.DATE, allowNull: true })
+  birthday: Date;
 }
