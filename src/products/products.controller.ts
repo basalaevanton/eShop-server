@@ -20,9 +20,6 @@ export class ProductsController {
   @Post()
   @UseInterceptors(FileInterceptor('image'))
   createPost(@Body() dto: ProductDto, @UploadedFile() image) {
-    console.log(dto);
-    console.log(image);
-
     return this.productsService.create(dto, image);
   }
 }

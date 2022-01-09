@@ -3,6 +3,6 @@ export class ProductDto {
   readonly category: string;
   readonly size: string;
   readonly color: string;
-  readonly price: number;
-
+  readonly price: string;
+  readonly picture: any;
 }

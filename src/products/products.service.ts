@@ -15,13 +15,14 @@ export class ProductsService {
     private fileService: FilesService,
   ) {}
 
-  async create(product: ProductDto, picture: any) {
-    const fileName = await this.fileService.createFile(picture);
+  async create(product: ProductDto, image: any) {
+    const fileName = await this.fileService.createFile(image);
     const addProduct = await this.productRepository.create({
       ...product,
+      price: Number(product.price),
       picture: fileName,
     });
-    console.log(fileName);
+
     return addProduct;
   }
 }
