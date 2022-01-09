@@ -60,7 +60,7 @@ export class AuthService {
       sameSite: 'strict',
       httpOnly: true,
     });
-    return tokens.accessToken;
+    return { accessToken: tokens.accessToken, user: userClient };
   }
 
   async activate(activationLink) {
