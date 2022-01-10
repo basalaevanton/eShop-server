@@ -10,7 +10,7 @@
 - NestJs
 - PostgreSql, sequelize
 - Swagger
-- Docker 
+- Docker
 
 ## Активация
 
@@ -19,3 +19,13 @@
 - accessToken
 - refreshToken to cookie
 - actvation acc from link in email
+
+## Старт сервера - Docker
+
+- Хост сервера - 'http://localhost:5000'
+
+### `gh repo clone basalaevanton/eShop-server`
+
+### `docker-compose build`
+
+### `docker-compose up`
