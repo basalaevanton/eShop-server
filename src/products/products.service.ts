@@ -15,6 +15,11 @@ export class ProductsService {
     private fileService: FilesService,
   ) {}
 
+  async getallproducts() {
+    const products = await this.productRepository.findAll();
+    return products;
+  }
+
   async create(product: ProductDto, image: any) {
     const fileName = await this.fileService.createFile(image);
     const addProduct = await this.productRepository.create({

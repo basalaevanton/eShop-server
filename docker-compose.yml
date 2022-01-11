@@ -1,15 +1,25 @@
 version: '3.0'
 
 services:
-  main:
-    container_name: main
+  client:
+    container_name: client
     build:
-      context: .
+      context: eShopClient
     env_file:
-      - .production.env
-    volumes:
-      - .:/app
-      - /app/node_modules
+      - ./eShopClient/.env
+
+    depends_on:
+      - server
+    ports:
+      - 3000:3000
+    command: npm run start
+
+  server:
+    container_name: server
+    build:
+      context: eShopServer
+    env_file:
+      - ./eShopServer/.production.env
     ports:
       - 5000:5000
       - 9229:9229
@@ -17,11 +27,12 @@ services:
     depends_on:
       - postgres
     restart: always
+
   postgres:
     container_name: postgres
     image: postgres:14
     env_file:
-      - .development.env
+      - ./eShopServer/.production.env
     environment:
       PG_DATA: /var/lib/postgresql/data
     ports:
@@ -29,6 +40,5 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     restart: always
-
 volumes:
   pgdata:

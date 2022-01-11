@@ -1,13 +1,14 @@
 FROM node:12.13-alpine
 
-WORKDIR /app
+WORKDIR /usr/serv
 
-COPY package*.json  ./
+
+COPY package*.json .
 
 RUN npm install
 
 COPY . .
 
-COPY ./dist ./dist
+RUN npm run build
 
-CMD ["npm", "run", "start:dev"]
+CMD ["npm", "run", "start"]
