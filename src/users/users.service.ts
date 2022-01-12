@@ -2,10 +2,10 @@
 https://docs.nestjs.com/providers#services
 */
 
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import {  Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateUserDto } from './dto/user.dto';
-import { LoginUserDto } from './dto/login-user.dto';
+
 import { UserInfo } from './userInfo.model';
 
 import { User } from './users.model';

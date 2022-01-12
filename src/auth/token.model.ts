@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   Column,
   DataType,
@@ -15,6 +16,7 @@ interface TokenCreationAttrs {
 
 @Table({ tableName: 'token' })
 export class Token extends Model<Token, TokenCreationAttrs> {
+  @ApiProperty({ description: 'Уникальный идентификатор' })
   @Column({
     type: DataType.INTEGER,
     unique: true,
@@ -23,10 +25,12 @@ export class Token extends Model<Token, TokenCreationAttrs> {
   })
   id: number;
 
+  @ApiProperty({ description: 'UserId' })
   @ForeignKey(() => User)
   @Column({ type: DataType.INTEGER })
   userId: number;
 
+  @ApiProperty({ description: 'Refresh Token' })
   @Column({
     type: DataType.STRING,
     allowNull: false,

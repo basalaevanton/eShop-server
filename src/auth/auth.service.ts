@@ -14,8 +14,8 @@ import * as bcrypt from 'bcryptjs';
 import * as uuid from 'uuid';
 import { TokenService } from './token.service';
 import { MailService } from './mail.service';
-import { TokenUserDto } from './dto/token-user.copy';
-import { CreateUserDto } from 'src/users/dto/user.dto';
+import { TokenUserDto } from './dto/token-user.dto';
+import { CreateUserDto, RegistrationUserDto } from 'src/users/dto/user.dto';
 
 @Injectable()
 export class AuthService {
@@ -25,7 +25,7 @@ export class AuthService {
     private mailService: MailService,
   ) {}
 
-  async registration(userDto: CreateUserDto, response) {
+  async registration(userDto: RegistrationUserDto, response) {
     const candidate = await this.userService.getUserByEmail(userDto.email);
     if (candidate) {
       throw new HttpException(
