@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   Column,
   DataType,
@@ -8,7 +9,7 @@ import {
 } from 'sequelize-typescript';
 import { User } from './users.model';
 
-const Gender: string[] = ['Male', 'Female', 'Other', 'Unknown'];
+export const Gender: string[] = ['Male', 'Female', 'Other', 'Unknown'];
 
 interface UserInfoCreationAttrs {
   userId: number;
@@ -19,6 +20,7 @@ interface UserInfoCreationAttrs {
 
 @Table({ tableName: 'userInfo' })
 export class UserInfo extends Model<UserInfo, UserInfoCreationAttrs> {
+  @ApiProperty({ example: '1', description: 'Уникальный идентификатор' })
   @Column({
     type: DataType.INTEGER,
     unique: true,
@@ -27,22 +29,28 @@ export class UserInfo extends Model<UserInfo, UserInfoCreationAttrs> {
   })
   id: number;
 
+  @ApiProperty({ example: 1, description: 'UserId модели User' })
   @ForeignKey(() => User)
   @Column({ type: DataType.INTEGER, unique: true, allowNull: false })
   userId: number;
 
+  @ApiProperty({ example: 'user@mail.ru', description: 'Почтовый адрес' })
   @Column({ type: DataType.STRING, unique: true, allowNull: false })
   email: string;
 
+  @ApiProperty({ example: 'Иван', description: 'Имя' })
   @Column({ type: DataType.STRING, unique: false, allowNull: false })
   firstName: string;
 
+  @ApiProperty({ example: 'Иванов', description: 'Фамилия' })
   @Column({ type: DataType.STRING, unique: false, allowNull: false })
   lastName: string;
 
+  @ApiProperty({ enum: Gender, example: 'Male', description: 'Пароль' })
   @Column({ type: DataType.ENUM(...Gender), allowNull: true })
   gender: string;
 
+  @ApiProperty({ example: new Date(), description: 'День Рождение' })
   @Column({ type: DataType.DATE, allowNull: true })
   birthday: Date;
 }

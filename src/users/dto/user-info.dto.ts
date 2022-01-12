@@ -1,15 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Gender } from '../userInfo.model';
 
-export class UserDto {
+export class UserInfoDto {
+  @ApiProperty({ example: 1, description: 'userId' })
+  readonly userId: number;
+
   @ApiProperty({ example: 'user@mail.ru', description: 'Почта' })
   readonly email: string;
-
-  @ApiProperty({
-    example: 'asdasd-asd12619-asd',
-    description: 'часть ссылки активации',
-  })
-  readonly activationLink: string;
 
   @ApiProperty({
     example: 'Иван',
@@ -22,9 +19,14 @@ export class UserDto {
     description: 'Фамилия',
   })
   readonly lastName: string;
-}
 
-export class CreateUserDto extends UserDto {
-  @ApiProperty({ example: '12348596', description: 'Пароль' })
-  readonly password: string;
+  @ApiProperty({
+    enum: Gender,
+    example: 'Male',
+    description: 'Пол',
+  })
+  readonly gender: string;
+
+  @ApiProperty({ example: new Date(), description: 'День Рождение' })
+  readonly birthday: Date;
 }

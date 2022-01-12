@@ -4,11 +4,12 @@ https://docs.nestjs.com/providers#services
 
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { CreateUserDto, EditUserDto } from './dto/user.dto';
+import { CreateUserDto } from './dto/user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { UserInfo } from './userInfo.model';
 
 import { User } from './users.model';
+import { UserInfoDto } from './dto/user-info.dto';
 
 @Injectable()
 export class UsersService {
@@ -66,7 +67,7 @@ export class UsersService {
     return user;
   }
 
-  async editUserInfo(userDto: EditUserDto) {
+  async editUserInfo(userDto: UserInfoDto) {
     const user = await this.userInfoRepository.findOne({
       where: { id: userDto.userId },
     });
