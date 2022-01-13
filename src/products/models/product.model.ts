@@ -12,6 +12,7 @@ import { Token } from 'src/auth/token.model';
 import { Category } from './category.model';
 import { ProductColor } from './product-color.model';
 import { Color } from './color.model';
+import { ProductSize, Size } from '.';
 
 interface ProductCreationAttrs {
   name: string;
@@ -41,8 +42,8 @@ export class Product extends Model<Product, ProductCreationAttrs> {
   @HasOne(() => Category)
   category: Category;
 
-  // @BelongsToMany(() => , () => )
-  // sizes: [];
+  @BelongsToMany(() => Size, () => ProductSize)
+  size: [];
 
   @BelongsToMany(() => Color, () => ProductColor)
   color: Color[];
