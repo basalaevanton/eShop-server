@@ -1,7 +1,17 @@
-import { Column, DataType, HasOne, Model, Table } from 'sequelize-typescript';
+import {
+  BelongsTo,
+  BelongsToMany,
+  Column,
+  DataType,
+  HasMany,
+  HasOne,
+  Model,
+  Table,
+} from 'sequelize-typescript';
 import { Token } from 'src/auth/token.model';
-
-
+import { Category } from './category.model';
+import { ProductColor } from './product-color.model';
+import { Color } from './color.model';
 
 interface ProductCreationAttrs {
   name: string;
@@ -25,14 +35,27 @@ export class Product extends Model<Product, ProductCreationAttrs> {
   @Column({ type: DataType.STRING, allowNull: false })
   name: string;
 
-  @Column({ type: DataType.STRING, allowNull: false })
-  category: string;
-  @Column({ type: DataType.STRING, allowNull: false })
-  size: string;
-  @Column({ type: DataType.STRING, allowNull: false })
-  color: string;
   @Column({ type: DataType.INTEGER, allowNull: false })
   price: number;
+
   @Column({ type: DataType.STRING, allowNull: false })
   picture: string;
+
+  @HasOne(() => Category)
+  
+  category: Category;
+
+  // @BelongsToMany(() => , () => )
+  // sizes: [];
+
+  @BelongsToMany(() => Color, () => ProductColor)
+  color: Color[];
 }
+
+// @ApiProperty({
+//   title: 'UserInfo',
+//   description: 'User model include UserInfo model on UserId',
+//   type: () => UserInfo,
+// })
+// @HasOne(() => UserInfo)
+// userInfo: UserInfo;

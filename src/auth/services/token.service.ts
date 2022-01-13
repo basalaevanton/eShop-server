@@ -11,9 +11,9 @@ import {
 import { JwtService } from '@nestjs/jwt';
 
 import { InjectModel } from '@nestjs/sequelize';
-import { Token } from './token.model';
+import { Token } from '../token.model';
 
-import { CreateTokenDto } from './dto/create-token.dto';
+import { CreateTokenDto } from '../dto/create-token.dto';
 
 @Injectable()
 export class TokenService {

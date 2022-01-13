@@ -14,7 +14,7 @@ import * as bcrypt from 'bcryptjs';
 import * as uuid from 'uuid';
 import { TokenService } from './token.service';
 import { MailService } from './mail.service';
-import { TokenUserDto } from './dto/token-user.dto';
+import { TokenUserDto } from '../dto/token-user.dto';
 import { CreateUserDto, RegistrationUserDto } from 'src/users/dto/user.dto';
 
 @Injectable()

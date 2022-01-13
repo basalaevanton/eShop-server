@@ -18,9 +18,10 @@ import {
   ResponseCreateUserDto,
 } from 'src/users/dto/user.dto';
 import { LoginUserDto } from 'src/users/dto/login-user.dto';
-import { AuthService } from './auth.service';
+import { AuthService } from './services/auth.service';
 import {
   ApiBody,
+  ApiCookieAuth,
   ApiHeader,
   ApiOperation,
   ApiParam,
@@ -144,6 +145,7 @@ export class AuthController {
     },
   })
   @Get('/refresh')
+  @ApiCookieAuth()
   refresh(@Req() request: Request, @Response({ passthrough: true }) response) {
     return this.authService.refresh(request, response);
   }

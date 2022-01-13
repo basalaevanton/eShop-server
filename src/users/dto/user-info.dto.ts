@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Gender } from '../userInfo.model';
+import { Gender } from '../models/userInfo.model';
 
 export class UserInfoDto {
   @ApiProperty({ example: 1, description: 'userId' })

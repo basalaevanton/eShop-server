@@ -12,9 +12,9 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { User } from './users.model';
+import { User } from './models/users.model';
 import { UserInfoDto } from './dto/user-info.dto';
-import { UserInfo } from './userInfo.model';
+import { UserInfo } from './models/userInfo.model';
 
 @ApiTags('Пользователи')
 @Controller('users')
@@ -35,7 +35,7 @@ export class UsersController {
   @ApiOperation({
     summary: 'Изменить данные пользователя только для AUTH USER',
   })
-  @ApiQuery({ type: [UserInfoDto] })
+  @ApiQuery({ type: UserInfoDto })
   @ApiResponse({ status: 200, type: UserInfo })
   editUserInfo(@Body() userDto: UserInfoDto) {
     return this.usersService.editUserInfo(userDto);

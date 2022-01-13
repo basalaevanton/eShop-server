@@ -46,7 +46,7 @@ export class UserInfo extends Model<UserInfo, UserInfoCreationAttrs> {
   @Column({ type: DataType.STRING, unique: false, allowNull: false })
   lastName: string;
 
-  @ApiProperty({ enum: Gender, example: 'Male', description: 'Пароль' })
+  @ApiProperty({ enum: Gender, example: 'Male', description: 'Пол' })
   @Column({ type: DataType.ENUM(...Gender), allowNull: true })
   gender: string;
 

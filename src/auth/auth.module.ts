@@ -1,4 +1,4 @@
-import { AuthService } from './auth.service';
+import { AuthService } from './services/auth.service';
 import { AuthController } from './auth.controller';
 /*
 https://docs.nestjs.com/modules
@@ -9,9 +9,9 @@ import { UsersModule } from 'src/users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { Token } from './token.model';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { TokenService } from './token.service';
-import { User } from 'src/users/users.model';
-import { MailService } from './mail.service';
+import { TokenService } from './services/token.service';
+import { User } from 'src/users/models/users.model';
+import { MailService } from './services/mail.service';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 

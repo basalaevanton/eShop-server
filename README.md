@@ -9,7 +9,7 @@
 
 - NestJs
 - PostgreSql, sequelize
-- Swagger
+- Swagger - 'http://localhost:5000/api/docs'
 - Docker
 
 ## Активация

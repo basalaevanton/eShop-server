@@ -5,13 +5,20 @@ https://docs.nestjs.com/providers#services
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { ProductDto } from './dto/createProduct.dto';
-import { Product } from './product.model';
+import { Product } from './models/product.model';
 import { FilesService } from '../files/files.service';
+import { ProductColor } from './models/product-color.model';
+import { Color } from './models/color.model';
+import { Category } from './models/category.model';
 
 @Injectable()
 export class ProductsService {
   constructor(
     @InjectModel(Product) private productRepository: typeof Product,
+    @InjectModel(Color) private colorRepository: typeof Color,
+    @InjectModel(ProductColor)
+    private productColorRepository: typeof ProductColor,
+    @InjectModel(Category) private categoryRepository: typeof Category,
     private fileService: FilesService,
   ) {}
 
