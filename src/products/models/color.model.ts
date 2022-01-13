@@ -12,22 +12,11 @@ import { Token } from 'src/auth/token.model';
 import { ProductColor } from './product-color.model';
 import { Product } from './product.model';
 
-export const ColorEnum: string[] = [
-  'Red',
-  'White',
-  'Yellow',
-  'Purple',
-  'Brown',
-  'Green',
-  'Orange',
-  'Black',
-  'Blue',
-];
 interface ColorCreationAttrs {
   name: string;
 }
 
-@Table({ tableName: 'color' })
+@Table({ tableName: 'color', createdAt: false, updatedAt: false })
 export class Color extends Model<Color, ColorCreationAttrs> {
   @ApiProperty({ example: '1', description: 'Уникальный идентификатор' })
   @Column({
@@ -43,7 +32,7 @@ export class Color extends Model<Color, ColorCreationAttrs> {
     example: 'Green',
     description: 'Color',
   })
-  @Column({ type: DataType.ENUM(...ColorEnum), allowNull: true })
+  @Column({ type: DataType.STRING, allowNull: true })
   name: string;
 
   @BelongsToMany(() => Product, () => ProductColor)

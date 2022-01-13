@@ -15,11 +15,8 @@ import { Color } from './color.model';
 
 interface ProductCreationAttrs {
   name: string;
-  category: string;
-  size: string;
-  color: string;
   price: number;
-  picture: string;
+  image: string;
 }
 
 @Table({ tableName: 'products' })
@@ -39,10 +36,9 @@ export class Product extends Model<Product, ProductCreationAttrs> {
   price: number;
 
   @Column({ type: DataType.STRING, allowNull: false })
-  picture: string;
+  image: string;
 
   @HasOne(() => Category)
-  
   category: Category;
 
   // @BelongsToMany(() => , () => )

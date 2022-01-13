@@ -12,7 +12,13 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiCookieAuth, ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCookieAuth,
+  ApiOperation,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { ProductDto } from './dto/createProduct.dto';
 import { Product } from './models/product.model';
@@ -32,12 +38,12 @@ export class ProductsController {
 
   // @UseGuards(JwtAuthGuard)
   @Post()
-  @ApiCookieAuth()
-  @ApiOperation({ summary: 'Загрузка продукта' })
-  @ApiQuery({ type: Product })
-  @ApiResponse({ status: 200, type: Product })
+  // @ApiCookieAuth()
+  // @ApiOperation({ summary: 'Загрузка продукта' })
+  // @ApiQuery({ type: Product })
+  // @ApiResponse({ status: 200, type: Product })
   @UseInterceptors(FileInterceptor('image'))
   createPost(@Body() dto: ProductDto, @UploadedFile() image) {
-    return this.productsService.create(dto, image);
+      return this.productsService.create(dto, image);
   }
 }

@@ -4,5 +4,5 @@ export class ProductDto {
   readonly size: string;
   readonly color: string;
   readonly price: string;
-  readonly picture: any;
+  readonly image: any;
 }

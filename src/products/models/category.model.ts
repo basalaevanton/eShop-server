@@ -28,9 +28,10 @@ export const CategoryEnum: string[] = [
 
 interface CategoryCreationAttrs {
   name: string;
+  productId: number;
 }
 
-@Table({ tableName: 'category' })
+@Table({ tableName: 'category', createdAt: false, updatedAt: false })
 export class Category extends Model<Category, CategoryCreationAttrs> {
   @ApiProperty({ example: '1', description: 'Уникальный идентификатор' })
   @Column({

@@ -23,18 +23,35 @@ export class ProductsService {
   ) {}
 
   async getallproducts() {
-    const products = await this.productRepository.findAll();
+    const products = await this.productRepository.findAll({
+      include: { all: true },
+    });
     return products;
   }
 
   async create(product: ProductDto, image: any) {
     const fileName = await this.fileService.createFile(image);
-    const addProduct = await this.productRepository.create({
-      ...product,
-      price: Number(product.price),
-      picture: fileName,
+
+    const Color = await this.colorRepository.findOrCreate({
+      where: { name: product.color },
+      defaults: {
+        name: product.color,
+      },
     });
 
-    return addProduct;
+    const Product = await this.productRepository.create({
+      name: product.name,
+      price: Number(product.price),
+      image: fileName,
+    });
+
+    Product.$add('color', Color[0].id);
+
+    const Category = await this.categoryRepository.create({
+      name: product.category,
+      productId: Product.id,
+    });
+
+    return Product;
   }
 }
